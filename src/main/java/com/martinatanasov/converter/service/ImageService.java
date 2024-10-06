@@ -4,7 +4,7 @@ import org.springframework.core.io.Resource;
 
 import java.io.IOException;
 
-public interface ImageService {
+public sealed interface ImageService permits ImageServiceImpl {
 
     boolean convertImageToWebp();
 

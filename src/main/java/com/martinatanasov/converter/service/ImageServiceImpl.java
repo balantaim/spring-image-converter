@@ -17,24 +17,27 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Service
-public class ImageServiceImpl implements ImageService {
+public final class ImageServiceImpl implements ImageService {
 
-    private final String ENTRY_RESOURCE = "src\\main\\resources\\static\\images\\edgar.jpg";
-    public final static String OUTPUT_RESOURCE = "src\\main\\resources\\static\\webp\\";
+    public final static String ENTRY_RESOURCE_FOLDER = "src\\main\\resources\\static\\images\\";
+    public final static String OUTPUT_RESOURCE_FOLDER = "src\\main\\resources\\static\\webp\\";
 
     @Override
     public boolean convertImageToWebp() {
         try {
+            //Select initial file name
+            final String entryImageName = "mtg.PNG";
             // Load the PNG image from the file system
-            BufferedImage pngImage = ImageIO.read(new File(ENTRY_RESOURCE));
+            BufferedImage bufferedImage = ImageIO.read(new File(ENTRY_RESOURCE_FOLDER + entryImageName));
             final UUID imageId = uniqueId();
             // Write the image in WebP format to the output path
-            File webpFile = new File(OUTPUT_RESOURCE + imageId + ".webp");
-            boolean result = ImageIO.write(pngImage, "webp", webpFile);
+            File webpFile = new File(OUTPUT_RESOURCE_FOLDER + imageId + ".webp");
+            boolean result = ImageIO.write(bufferedImage, "webp", webpFile);
             if (result) {
-                log.info("Conversion successful! WebP image saved at: " + OUTPUT_RESOURCE + imageId);
+                log.info("Conversion successful! WebP image saved at: " + OUTPUT_RESOURCE_FOLDER + imageId);
             } else {
                 log.info("Conversion failed.");
+                return false;
             }
             return true;
         } catch (Exception e) {
@@ -45,7 +48,7 @@ public class ImageServiceImpl implements ImageService {
 
     @Override
     public Iterable<String> getImageNames() throws IOException {
-        Path path = Paths.get(OUTPUT_RESOURCE).normalize();
+        Path path = Paths.get(OUTPUT_RESOURCE_FOLDER).normalize();
         return Files.list(path)
                 .filter(Files::isRegularFile) // Only regular files, not directories
                 .map(Path::getFileName)       // Get only the file name, not the full path
@@ -55,7 +58,7 @@ public class ImageServiceImpl implements ImageService {
 
     @Override
     public Resource getSingleImage(String name) throws IOException {
-        Path path = Paths.get(OUTPUT_RESOURCE).resolve(name).normalize();
+        Path path = Paths.get(OUTPUT_RESOURCE_FOLDER).resolve(name).normalize();
         if (Files.exists(path) && Files.isRegularFile(path)) {
             log.info("Resource exist!");
             return new UrlResource(path.toUri());
@@ -66,4 +69,5 @@ public class ImageServiceImpl implements ImageService {
     private UUID uniqueId() {
         return UUID.randomUUID();
     }
+
 }
