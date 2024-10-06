@@ -6,7 +6,7 @@ import java.io.IOException;
 
 public sealed interface ImageService permits ImageServiceImpl {
 
-    boolean convertImageToWebp();
+    boolean convertImageToWebp(final byte[] imageInMemory);
 
     Iterable<String> getImageNames() throws IOException;
 

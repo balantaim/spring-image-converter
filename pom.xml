@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.martinatanasov</groupId>
 	<artifactId>converter</artifactId>
-	<version>1.0.0-SNAPSHOT-LOCAL</version>
+	<version>1.1.0-REST</version>
 	<name>converter</name>
 	<description>WEBP image converter</description>
 
@@ -64,6 +64,7 @@
 	<build>
 		<plugins>
 			<plugin>
+
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
@@ -74,6 +75,23 @@
 						</exclude>
 					</excludes>
 				</configuration>
+
+				<!-- additional properties for actuator.info run 'mvn spring-boot:run' -->
+				<executions>
+					<execution>
+						<goals>
+							<!-- Add build info to the jar-->
+							<goal>build-info</goal>
+						</goals>
+						<configuration>
+							<additionalProperties>
+								<foo>foo</foo>
+								<bar>bar</bar>
+							</additionalProperties>
+						</configuration>
+					</execution>
+				</executions>
+
 			</plugin>
 		</plugins>
 	</build>

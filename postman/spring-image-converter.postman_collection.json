@@ -1,0 +1,94 @@
+{
+	"info": {
+		"_postman_id": "2a9b5844-cf0a-4de3-bfca-5e22b2c96c35",
+		"name": "spring-image-converter",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "33334519"
+	},
+	"item": [
+		{
+			"name": "Convert Image",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "image",
+							"type": "file",
+							"src": "/C:/Users/Balantaim/eclipse-workspace/spring-image-converter/src/main/resources/static/images/mtg.PNG"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:5000",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000"
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Image list",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/webp",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"webp"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Image By Name",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/73f0cd38-fa62-4375-852f-a2c49a6c2d50.webp",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"73f0cd38-fa62-4375-852f-a2c49a6c2d50.webp"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Download Image By Name",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/download/73f0cd38-fa62-4375-852f-a2c49a6c2d50.webp",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"download",
+						"73f0cd38-fa62-4375-852f-a2c49a6c2d50.webp"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

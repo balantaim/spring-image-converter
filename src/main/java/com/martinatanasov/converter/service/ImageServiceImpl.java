@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -19,16 +20,13 @@ import java.util.stream.Collectors;
 @Service
 public final class ImageServiceImpl implements ImageService {
 
-    public final static String ENTRY_RESOURCE_FOLDER = "src\\main\\resources\\static\\images\\";
     public final static String OUTPUT_RESOURCE_FOLDER = "src\\main\\resources\\static\\webp\\";
 
     @Override
-    public boolean convertImageToWebp() {
+    public boolean convertImageToWebp(final byte[] imageInMemory) {
         try {
-            //Select initial file name
-            final String entryImageName = "mtg.PNG";
             // Load the PNG image from the file system
-            BufferedImage bufferedImage = ImageIO.read(new File(ENTRY_RESOURCE_FOLDER + entryImageName));
+            BufferedImage bufferedImage = convertToBufferedImage(imageInMemory);
             final UUID imageId = uniqueId();
             // Write the image in WebP format to the output path
             File webpFile = new File(OUTPUT_RESOURCE_FOLDER + imageId + ".webp");
@@ -68,6 +66,13 @@ public final class ImageServiceImpl implements ImageService {
 
     private UUID uniqueId() {
         return UUID.randomUUID();
+    }
+
+    private BufferedImage convertToBufferedImage(final byte[] fileData) throws IOException {
+        // Convert byte array to BufferedImage using ByteArrayInputStream
+        try (ByteArrayInputStream bis = new ByteArrayInputStream(fileData)) {
+            return ImageIO.read(bis);
+        }
     }
 
 }
