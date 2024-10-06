@@ -32,7 +32,7 @@ public class ImageController {
     @PostMapping(value = "",
             consumes = {MediaType.MULTIPART_FORM_DATA_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<String> convertImage(@Validated @RequestParam("image") MultipartFile image) {
+    public ResponseEntity<String> convertImage(@RequestParam("image") MultipartFile image) {
         try {
             if(!isSupportedFileType(image)){
                 log.error("Wrong file format!");
