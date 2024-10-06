@@ -11,14 +11,13 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-import static com.martinatanasov.converter.service.ImageServiceImpl.OUTPUT_RESOURCE;
+import static com.martinatanasov.converter.service.ImageServiceImpl.OUTPUT_RESOURCE_FOLDER;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -26,23 +25,18 @@ import static com.martinatanasov.converter.service.ImageServiceImpl.OUTPUT_RESOU
 public class ImageController {
 
     @Autowired
-    ImageService imageService;
+    final ImageService imageService;
 
     @GetMapping("")
     public ResponseEntity<String> loadImage() {
         boolean isCreated = imageService.convertImageToWebp();
         if (isCreated) {
             log.info("Webp Image created!");
-            return new ResponseEntity<>("Loaded!", HttpStatus.OK);
+            return new ResponseEntity<>("Image Created!", HttpStatus.OK);
         } else {
             log.error("Failed to create webp image!");
             return new ResponseEntity<>("Failed!", HttpStatus.BAD_REQUEST);
         }
-    }
-
-    @PostMapping("")
-    public ResponseEntity<String> convertImage() {
-        return new ResponseEntity<>("Created!", HttpStatus.CREATED);
     }
 
     @GetMapping("/webp")
@@ -73,7 +67,7 @@ public class ImageController {
     public ResponseEntity<Resource> reviewSingleImage(@PathVariable String imageName) throws IOException {
         Resource resource = imageService.getSingleImage(imageName);
         // Determine the content type of the file
-        String contentType = Files.probeContentType(Paths.get(OUTPUT_RESOURCE).resolve(imageName).normalize());
+        String contentType = Files.probeContentType(Paths.get(OUTPUT_RESOURCE_FOLDER).resolve(imageName).normalize());
         // If the content type could not be determined, default to application/octet-stream
         if (contentType == null) {
             contentType = MediaType.APPLICATION_OCTET_STREAM_VALUE;
@@ -88,6 +82,5 @@ public class ImageController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
     }
-
 
 }
