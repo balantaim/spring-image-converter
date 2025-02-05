@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.martinatanasov</groupId>
 	<artifactId>converter</artifactId>
-	<version>1.1.0-REST</version>
+	<version>1.1.1-REST</version>
 	<name>converter</name>
 	<description>WEBP image converter</description>
 

@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 @Service
 public final class ImageServiceImpl implements ImageService {
 
-    public final static String OUTPUT_RESOURCE_FOLDER = "src\\main\\resources\\static\\webp\\";
+    public final static String OUTPUT_RESOURCE_FOLDER = "src/main/resources/static/webp/";
 
     @Override
     public boolean convertImageToWebp(final byte[] imageInMemory) {
